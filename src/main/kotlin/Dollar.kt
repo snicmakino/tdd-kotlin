@@ -1,6 +1,6 @@
-class Dollar(amount: Int) {
-    val amount = 5 * 2
+class Dollar(var amount: Int) {
 
     fun times(multiplier: Int) {
+        amount *= multiplier
     }
 }
