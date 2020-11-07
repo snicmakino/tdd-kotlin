@@ -6,5 +6,6 @@ open class Money(protected val amount: Int) {
             return false
         }
         return amount == other.amount
+                && this.javaClass.kotlin == other.javaClass.kotlin
     }
 }
