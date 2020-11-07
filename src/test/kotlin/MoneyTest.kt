@@ -5,10 +5,8 @@ import io.kotest.matchers.shouldNotBe
 class MoneyTest : FunSpec({
     test("掛け算をテストする") {
         val five: Dollar = Dollar(5)
-        var product: Dollar = five.times(2)
-        product.amount shouldBe 10
-        product = five.times(3)
-        product.amount shouldBe 15
+        five.times(2) shouldBe Dollar(10)
+        five.times(3) shouldBe Dollar(15)
     }
 
     test("等価性をテストする") {
