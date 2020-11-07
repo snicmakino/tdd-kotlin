@@ -1,7 +1,6 @@
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import money.Franc
 import money.Money
 
 class MoneyTest : FunSpec({
@@ -14,14 +13,14 @@ class MoneyTest : FunSpec({
     test("等価性をテストする") {
         Money.dollar(5) shouldBe Money.dollar(5)
         Money.dollar(5) shouldNotBe Money.dollar(6)
-        Franc(5) shouldBe Franc(5)
-        Franc(5) shouldNotBe Franc(6)
-        Money.dollar(5) shouldNotBe Franc(5)
+        Money.franc(5) shouldBe Money.franc(5)
+        Money.franc(5) shouldNotBe Money.franc(6)
+        Money.dollar(5) shouldNotBe Money.franc(5)
     }
 
     test("フランの掛け算をテストする") {
-        val five = Franc(5)
-        five.times(2) shouldBe Franc(10)
-        five.times(3) shouldBe Franc(15)
+        val five = Money.franc(5)
+        five.times(2) shouldBe Money.franc(10)
+        five.times(3) shouldBe Money.franc(15)
     }
 })
