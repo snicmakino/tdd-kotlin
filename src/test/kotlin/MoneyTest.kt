@@ -14,6 +14,8 @@ class MoneyTest : FunSpec({
     test("等価性をテストする") {
         Dollar(5) shouldBe Dollar(5)
         Dollar(5) shouldNotBe Dollar(6)
+        Franc(5) shouldBe Franc(5)
+        Franc(5) shouldNotBe Franc(6)
     }
 
     test("フランの掛け算をテストする") {
