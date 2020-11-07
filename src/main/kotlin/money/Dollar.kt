@@ -1,3 +1,5 @@
+package money
+
 class Dollar(private val amount: Int) {
 
     fun times(multiplier: Int): Dollar {
