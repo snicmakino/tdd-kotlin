@@ -1,6 +1,7 @@
 package money
 
-abstract class Money(protected val amount: Int) {
+abstract class Money(protected val amount: Int, private val currency: String) {
+
     override fun equals(other: Any?): Boolean {
         if (other !is Money) {
             return false
@@ -10,15 +11,18 @@ abstract class Money(protected val amount: Int) {
     }
 
     abstract fun times(multiplier: Int): Money
-    abstract fun currency(): String
+
+    fun currency(): String {
+        return currency
+    }
 
     companion object {
         fun dollar(amount: Int): Money {
-            return Dollar(amount)
+            return Dollar(amount, "USD")
         }
 
         fun franc(amount: Int): Money {
-            return Franc(amount)
+            return Franc(amount, "CHF")
         }
     }
 }

@@ -1,11 +1,7 @@
 package money
 
-class Franc(amount: Int) : Money(amount) {
+class Franc(amount: Int, currency: String) : Money(amount, currency) {
     override fun times(multiplier: Int): Money {
-        return Franc(amount * multiplier)
-    }
-
-    override fun currency(): String {
-        return "CHF"
+        return franc(amount * multiplier)
     }
 }
