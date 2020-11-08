@@ -2,11 +2,11 @@ package money
 
 class Money(val amount: Int, private val currency: String) : Expression {
 
-    fun times(multiplier: Int): Money {
+    fun times(multiplier: Int): Expression {
         return Money(amount * multiplier, currency)
     }
 
-    fun plus(addend: Money): Expression {
+    override fun plus(addend: Expression): Expression {
         return Sum(this, addend)
     }
 

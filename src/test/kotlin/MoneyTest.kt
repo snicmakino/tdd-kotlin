@@ -69,4 +69,13 @@ class MoneyTest : FunSpec({
     test("同一のレートのテスト") {
         Bank().rate("USD", "USD") shouldBe 1
     }
+
+    test("複数の通貨の合計テスト") {
+        val fiveBucks: Expression = Money.dollar(5)
+        val tenFrancs: Expression = Money.franc(10)
+        val bank = Bank()
+        bank.addRate("CHF", "USD", 2)
+        val result: Money = bank.reduce(fiveBucks.plus(tenFrancs), "USD")
+        result shouldBe Money.dollar(10)
+    }
 })
