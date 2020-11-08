@@ -1,8 +1,8 @@
 package money
 
-open class Money(protected val amount: Int, protected val currency: String) {
+class Money(private val amount: Int, private val currency: String) {
 
-    open fun times(multiplier: Int): Money {
+    fun times(multiplier: Int): Money {
         return Money(amount * multiplier, currency)
     }
 
