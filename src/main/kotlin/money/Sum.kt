@@ -9,4 +9,8 @@ class Sum(val augend: Expression, val addend: Expression) : Expression {
         val amount = augend.reduce(bank, to).amount + addend.reduce(bank, to).amount
         return Money(amount, to)
     }
+
+    override fun times(multiplier: Int): Expression {
+        return Sum(augend.times(multiplier), addend.times(multiplier))
+    }
 }
