@@ -2,6 +2,14 @@ package money
 
 open class Money(protected val amount: Int, protected val currency: String) {
 
+    open fun times(multiplier: Int): Money {
+        return Money(amount * multiplier, currency)
+    }
+
+    fun currency(): String {
+        return currency
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is Money) {
             return false
@@ -10,12 +18,8 @@ open class Money(protected val amount: Int, protected val currency: String) {
                 && currency() == other.currency()
     }
 
-    open fun times(multiplier: Int): Money {
-        return Money(amount * multiplier, currency)
-    }
-
-    fun currency(): String {
-        return currency
+    override fun toString(): String {
+        return "$amount $currency"
     }
 
     companion object {
@@ -26,9 +30,5 @@ open class Money(protected val amount: Int, protected val currency: String) {
         fun franc(amount: Int): Money {
             return Money(amount, "CHF")
         }
-    }
-
-    override fun toString(): String {
-        return "$amount $currency"
     }
 }
