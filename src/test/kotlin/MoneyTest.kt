@@ -4,6 +4,7 @@ import io.kotest.matchers.shouldNotBe
 import money.Bank
 import money.Expression
 import money.Money
+import money.Sum
 
 class MoneyTest : FunSpec({
     test("掛け算をテストする") {
@@ -32,9 +33,29 @@ class MoneyTest : FunSpec({
     test("単純な足し算のテスト") {
         val five: Money = Money.dollar(5)
         val sum: Expression = five.plus(five)
-        sum shouldBe Money.dollar(10)
-        val bank: Bank = Bank()
-        val reduced = bank.reduce(sum, "USD")
+        val bank = Bank()
+        val reduced: Money = bank.reduce(sum, "USD") as Money
         reduced shouldBe Money.dollar(10)
+    }
+
+    test("足し算の結果のSumをテスト") {
+        val five: Money = Money.dollar(5)
+        val result: Expression = five.plus(five)
+        val sum: Sum = result as Sum
+        sum.augend shouldBe five
+        sum.addend shouldBe five
+    }
+
+    test("Sumの換算結果をテスト") {
+        val sum: Expression = Sum(Money.dollar(3), Money.dollar(4))
+        val bank = Bank()
+        val result: Money = bank.reduce(sum, "USD") as Money
+        result shouldBe Money.dollar(7)
+    }
+
+    test("Moneyの換算結果をテスト") {
+        val bank = Bank()
+        val result: Money = bank.reduce(Money.dollar(1), "USD") as Money
+        result shouldBe Money.dollar(1)
     }
 })
