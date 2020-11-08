@@ -10,6 +10,7 @@ abstract class Money(protected val amount: Int) {
     }
 
     abstract fun times(multiplier: Int): Money
+    abstract fun currency(): String
 
     companion object {
         fun dollar(amount: Int): Money {

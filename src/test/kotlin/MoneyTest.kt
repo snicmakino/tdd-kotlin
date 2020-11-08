@@ -23,4 +23,9 @@ class MoneyTest : FunSpec({
         five.times(2) shouldBe Money.franc(10)
         five.times(3) shouldBe Money.franc(15)
     }
+
+    test("通貨のテスト") {
+        Money.dollar(1).currency() shouldBe "USD"
+        Money.franc(1).currency() shouldBe "CHF"
+    }
 })
