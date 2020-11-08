@@ -11,7 +11,7 @@ open class Money(protected val amount: Int, protected val currency: String) {
     }
 
     open fun times(multiplier: Int): Money {
-        return Money(0, "")
+        return Money(amount * multiplier, currency)
     }
 
     fun currency(): String {
