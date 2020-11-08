@@ -65,4 +65,8 @@ class MoneyTest : FunSpec({
         val result: Money = bank.reduce(Money.franc(2), "USD")
         result shouldBe Money.dollar(1)
     }
+
+    test("同一のレートのテスト") {
+        Bank().rate("USD", "USD") shouldBe 1
+    }
 })
