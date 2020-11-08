@@ -1,9 +1,13 @@
 package money
 
-class Money(private val amount: Int, private val currency: String) {
+class Money(private val amount: Int, private val currency: String) : Expression {
 
     fun times(multiplier: Int): Money {
         return Money(amount * multiplier, currency)
+    }
+
+    fun plus(addend: Money): Expression {
+        return Money(amount + addend.amount, currency)
     }
 
     fun currency(): String {
