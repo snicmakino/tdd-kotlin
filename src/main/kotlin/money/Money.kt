@@ -1,28 +1,34 @@
 package money
 
-abstract class Money(protected val amount: Int, private val currency: String) {
+open class Money(protected val amount: Int, protected val currency: String) {
 
     override fun equals(other: Any?): Boolean {
         if (other !is Money) {
             return false
         }
         return amount == other.amount
-                && this.javaClass.kotlin == other.javaClass.kotlin
+                && currency() == other.currency()
     }
 
-    abstract fun times(multiplier: Int): Money
+    open fun times(multiplier: Int): Money {
+        return Money(0, "")
+    }
 
     fun currency(): String {
         return currency
     }
 
     companion object {
-        fun dollar(amount: Int): Money {
+        fun dollar(amount: Int): Dollar {
             return Dollar(amount, "USD")
         }
 
-        fun franc(amount: Int): Money {
+        fun franc(amount: Int): Franc {
             return Franc(amount, "CHF")
         }
+    }
+
+    override fun toString(): String {
+        return "$amount $currency"
     }
 }
