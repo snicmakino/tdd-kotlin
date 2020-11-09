@@ -1,14 +1,27 @@
 fun main(args: Array<String>) {
-    val test = WasRun("testMethod")
-    println(test.wasRun)
-    test.testMethod()
-    println(test.wasRun)
+    TestCaseTest("testRunning").run()
 }
 
-class WasRun(val name: String) {
-    var wasRun: Boolean = false
+open class TestCase(private val name: String) {
+    fun run() {
+        val jClass = this.javaClass
+        val method = jClass.getMethod(name)
+        method.invoke(this)
+    }
+}
 
+class WasRun(name: String) : TestCase(name) {
+    var wasRun: Boolean = false
     fun testMethod() {
         wasRun = true
+    }
+}
+
+class TestCaseTest(name: String) : TestCase(name) {
+    fun testRunning() {
+        val test = WasRun("testMethod")
+        check(!test.wasRun)
+        test.run()
+        check(test.wasRun)
     }
 }
