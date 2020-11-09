@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 sourceSets {
-    getByName("main").java.srcDirs("src/main/money")
+    getByName("main").java.srcDirs("src/main/money", "src/main/xunit")
     getByName("test").java.srcDirs("src/test/money")
 }
 dependencies {
