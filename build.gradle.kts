@@ -2,13 +2,16 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.10"
-    application
 }
 group = "me.shinichi"
 version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+sourceSets {
+    getByName("main").java.srcDirs("src/main/money")
+    getByName("test").java.srcDirs("src/test/money")
 }
 dependencies {
     implementation("io.kotest:kotest-runner-junit5-jvm:4.1.1")
@@ -20,9 +23,6 @@ dependencies {
 
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "13"
-}
-application {
-    mainClassName = "MainKt"
 }
 tasks.withType<Test> {
     useJUnitPlatform()
