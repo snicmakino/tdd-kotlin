@@ -1,10 +1,15 @@
 import java.lang.reflect.Method
 
 fun main(args: Array<String>) {
-    TestCaseTest("testTemplateMethod").run()
-    TestCaseTest("testResult").run()
-    TestCaseTest("testBrokenMethod").run()
-    TestCaseTest("testFailedResultFormatting").run()
+    val suite = TestSuite()
+    suite.add(TestCaseTest("testTemplateMethod"))
+    suite.add(TestCaseTest("testResult"))
+    suite.add(TestCaseTest("testFailedResult"))
+    suite.add(TestCaseTest("testFailedResultFormatting"))
+    suite.add(TestCaseTest("testSuite"))
+    val result = TestResult()
+    suite.run(result)
+    println(result.summary())
 }
 
 open class TestCase(private val name: String) {
@@ -12,8 +17,7 @@ open class TestCase(private val name: String) {
     open fun setUp() {}
     open fun tearDown() {}
 
-    fun run(): TestResult {
-        val result = TestResult()
+    fun run(result: TestResult) {
         result.testStarted()
         setUp()
         try {
@@ -23,7 +27,6 @@ open class TestCase(private val name: String) {
             result.testFailed()
         }
         tearDown()
-        return result
     }
 
     private fun method(): Method {
@@ -69,29 +72,54 @@ class TestResult {
     }
 }
 
+class TestSuite {
+    val tests = mutableListOf<TestCase>()
+
+    fun add(test: TestCase) {
+        tests.add(test)
+    }
+
+    fun run(result: TestResult) {
+        tests.map { it.run(result) }
+    }
+}
+
 class TestCaseTest(name: String) : TestCase(name) {
+    lateinit var result: TestResult
+
+    override fun setUp() {
+        result = TestResult()
+    }
+
     fun testTemplateMethod() {
         val test = WasRun("testMethod")
-        test.run()
+        test.run(result)
         check("setUp testMethod tearDown " == test.log)
     }
 
     fun testResult() {
         val test = WasRun("testMethod")
-        val result: TestResult = test.run()
+        test.run(result)
         check("1 run, 0 failed" == result.summary())
     }
 
     fun testFailedResult() {
         val test = WasRun("testBrokenMethod")
-        val result: TestResult = test.run()
+        test.run(result)
         check("1 run, 1 failed" == result.summary())
     }
 
     fun testFailedResultFormatting() {
-        val result = TestResult()
         result.testStarted()
         result.testFailed()
         check("1 run, 1 failed" == result.summary())
+    }
+
+    fun testSuite() {
+        val suite = TestSuite()
+        suite.add(WasRun("testMethod"))
+        suite.add(WasRun("testBrokenMethod"))
+        suite.run(result)
+        check("2 run, 1 failed" == result.summary())
     }
 }
