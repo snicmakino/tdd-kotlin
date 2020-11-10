@@ -36,4 +36,10 @@ class TestCaseTest(name: String) : TestCase(name) {
         test.run()
         check("setUp testMethod tearDown " == test.log)
     }
+
+    fun testResult() {
+        val test = WasRun("testMethod")
+        val result: TestResult = test.run()
+        check("1 run, 0 failed" == result.summary())
+    }
 }
